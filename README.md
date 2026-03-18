@@ -74,7 +74,7 @@ Press one of these keys to switch output modes during gameplay. *Listed in order
 | Key | Mode | Description |
 |-----|------|-------------|
 | **Z** | X, Y, Z, Yaw, Pitch | 6DOF Head Position and Head Rotation, no roll. |
-| **X** | X, Y, Z | Head Position only, no Head Rotation.<br>*(This is how Leia use Head Tracking in native games, like Stellar Blade and Lies of P. Avoids Parallax Discontinuity.)* |
+| **X** | X, Y, Z | Head Position only, no Head Rotation.<br>*(This is how Leia use Head Tracking in native games, like Stellar Blade and Lies of P. Avoids [Motion Parallax Conflict](https://www.pcgamingwiki.com/wiki/Glossary:Native_3D#Motion_Parallax_Conflict).)* |
 | **C** |  Yaw, Pitch | 3DOF Head Rotation only, no roll. |
 | **V** | X, Y, Z, Yaw, Pitch, Roll | 6DOF Head Position and Head Rotation.<br>*(Not reccomended as Roll is unneccisary.)* |
 | **B** |Yaw, Pitch, Roll | 3DOF Head Rotation only, no position.<br>*(Not reccomended as Roll is unneccisary.)* |
