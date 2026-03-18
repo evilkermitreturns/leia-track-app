@@ -52,7 +52,7 @@ Some of the games playable in 3D and headtracking on Leia Simulated Reality moni
 
 ## Controls
 
-Hotkeys only work when the console window is focused — they won't interfere with your game.
+Hotkeys only work when the console window is focused. They won't interfere with your game.
 
 ### Tuning Hotkeys
 
@@ -69,22 +69,22 @@ Hotkeys only work when the console window is focused — they won't interfere wi
 
 ### Output Modes
 
-Press one of these keys to switch output modes during gameplay:
+Press one of these keys to switch output modes during gameplay. *Listed in order of reccomendation*:
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| **Z** | 1: XYZ + Yaw/Pitch | **Recommended** — 3D position + head look (default) |
-| **X** | 2: XYZ only | Pure positional tracking, no rotation |
-| **C** | 3: XYZ + Yaw/Pitch/Roll | Full 6DOF (position + all rotations) |
-| **V** | 4: Yaw/Pitch/Roll only | Head rotation only, no position |
-| **B** | 5: Yaw/Pitch only | Head look without roll (reduces jitter) |
+| **Z** | X, Y, Z, Yaw, Pitch | 6DOF Head Position and Head Rotation, no roll. |
+| **X** | X, Y, Z | Head Position only, no Head Rotation.<br>*(This is how Leia use Head Tracking in native games, like Stellar Blade and Lies of P. Avoids Parallax Discontinuity.)* |
+| **C** |  Yaw, Pitch | 3DOF Head Rotation only, no roll. |
+| **V** | X, Y, Z, Yaw, Pitch, Roll | 6DOF Head Position and Head Rotation.<br>*(Not reccomended as Roll is unneccisary.)* |
+| **B** |Yaw, Pitch, Roll | 3DOF Head Rotation only, no position.<br>*(Not reccomended as Roll is unneccisary.)* |
 
 ### Output Target
 
 | Key | Target | Description |
 |-----|--------|-------------|
 | **A** | OpenTrack | No inversion (default) |
-| **S** | SteamVR/VRto3D | With X/Yaw/Roll inversion |
+| **S** | SteamVR/VRto3D | With X, Yaw, Roll inversion (X, Y, Z not working currently) |
 
 Settings auto-save on every change. Press **Ctrl+L** to lock hotkeys and prevent accidental changes.
 
