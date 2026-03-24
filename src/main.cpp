@@ -79,7 +79,7 @@ static std::string get_config_path() {
     return path + "opentrack_bridge_config.txt";
 }
 
-static bool save_config(const TrackConfig& cfg, int output_target) {
+static bool save_config(const TrackConfig& cfg) {
     std::string path = get_config_path();
     std::ofstream f(path);
     if (!f.is_open()) return false;
@@ -108,13 +108,12 @@ static bool save_config(const TrackConfig& cfg, int output_target) {
     f << "invert_yaw = " << (cfg.invert_yaw ? 1 : 0) << "\n";
     f << "invert_roll = " << (cfg.invert_roll ? 1 : 0) << "\n";
     f << "output_mode = " << cfg.output_mode << "\n";
-    f << "output_target = " << output_target << "\n";
 
     f.close();
     return true;
 }
 
-static bool load_config(TrackConfig& cfg, int& output_target) {
+static bool load_config(TrackConfig& cfg) {
     std::string path = get_config_path();
     std::ifstream f(path);
     if (!f.is_open()) return false;
@@ -164,14 +163,12 @@ static bool load_config(TrackConfig& cfg, int& output_target) {
             else if (key == "invert_yaw") cfg.invert_yaw = (v != 0.0f);
             else if (key == "invert_roll") cfg.invert_roll = (v != 0.0f);
             else if (key == "output_mode") cfg.output_mode = static_cast<int>(v);
-            else if (key == "output_target") output_target = static_cast<int>(v);
         } catch (...) {
             continue;
         }
     }
     cfg.output_mode = std::clamp(cfg.output_mode, 1, 5);
     cfg.angle_deadzone_deg = std::clamp(cfg.angle_deadzone_deg, 0.0f, 5.0f);
-    output_target = std::clamp(output_target, 1, 2);
     
     // Clamp filter parameters
     cfg.filter_pos_mincutoff = std::clamp(cfg.filter_pos_mincutoff, 0.001f, 10.0f);
@@ -193,30 +190,23 @@ static const char* mode_name(int mode) {
     }
 }
 
-// 1 = OpenTrack, 2 = SteamVR/VRto3D
+// 1 = OpenTrack
 static const char* output_target_name(int output_target) {
-    return (output_target == 2) ? "SteamVR/VRto3D" : "OpenTrack";
+    return "OpenTrack";
 }
 
-static void apply_output_target(TrackConfig& cfg, int output_target) {
-    if (output_target == 1) {
-        // OpenTrack convention (needs inversion)
-        cfg.invert_x = true;
-        cfg.invert_yaw = true;
-        cfg.invert_roll = true;
-    } else {
-        // SteamVR/VRto3D convention (no inversion)
-        cfg.invert_x = false;
-        cfg.invert_yaw = false;
-        cfg.invert_roll = false;
-    }
+static void apply_output_target(TrackConfig& cfg) {
+    // OpenTrack convention: all axes inverted
+    cfg.invert_x = true;
+    cfg.invert_yaw = true;
+    cfg.invert_roll = true;  // Roll inversion now enabled for OpenTrack
 }
 
 // --- Console helpers ---
 
 static void print_banner() {
     std::printf("========================================================\n");
-    std::printf("  Simulated Reality OpenTrack Bridge v0.1   by evilkermitreturns & effcol\n");
+    std::printf("  Simulated Reality OpenTrack Bridge v0.2   by evilkermitreturns & effcol\n");
     std::printf("========================================================\n");
     std::printf("  Leia head pose -> One-Euro filter -> OpenTrack UDP\n");
     std::printf("  Standalone head tracking for any game that supports OpenTrack.\n");
@@ -239,10 +229,6 @@ static void print_banner() {
     std::printf("    C  Yaw/Pitch only (head rotation without roll)\n");
     std::printf("    V  All 6 axes: X/Y/Z + Yaw/Pitch/Roll (full 6DOF)\n");
     std::printf("    B  Yaw/Pitch/Roll only (3DOF head rotation only)\n");
-    std::printf("\n");
-    std::printf("  OUTPUT TARGET\n");
-    std::printf("    A  Switch to: OpenTrack (no inversion) **DEFAULT**\n");
-    std::printf("    S  Switch to: SteamVR/VRto3D (with X/Yaw/Roll inversion)\n");
     std::printf("\n");
     std::printf("  Settings auto-save on every change.\n");
     std::printf("  Config: opentrack_bridge_config.txt (next to executable)\n");
@@ -295,15 +281,14 @@ int main() {
 
     // 3. Create pipeline (auto-load saved settings if available)
     TrackConfig cfg;
-    int output_target = 1;
-    if (load_config(cfg, output_target)) {
+    if (load_config(cfg)) {
         std::printf("[OK] Settings loaded from: %s\n", get_config_path().c_str());
     }
-    apply_output_target(cfg, output_target);
+    apply_output_target(cfg);
     TrackPipeline pipeline(cfg);
 
-    std::printf("[OK] Output target: %s\n", output_target_name(output_target));
-    std::printf("[OK] Axis inversion: X=%s Yaw=%s Roll=%s\n",
+    std::printf("[OK] Output target: OpenTrack\n");
+    std::printf("[OK] Axis inversion: X=%s Yaw=%s Roll=%s (OpenTrack convention)\n",
         cfg.invert_x ? "ON" : "OFF",
         cfg.invert_yaw ? "ON" : "OFF",
         cfg.invert_roll ? "ON" : "OFF");
@@ -362,7 +347,6 @@ int main() {
                     if (udp_fail_count > 0) std::printf(" FAIL:%d", udp_fail_count);
                     if (keys_locked) std::printf(" [LOCKED]");
                     std::printf(" Z:%d", cfg.output_mode);
-                    std::printf(" T:%s", output_target == 2 ? "SVR" : "OT");
                     std::printf("   ");
                     std::fflush(stdout);
                 }
@@ -466,28 +450,6 @@ int main() {
                     config_changed = true;
                     break;
 
-                // Output target: OpenTrack vs SteamVR/VRto3D
-                case 'a':
-                case 'A':
-                    output_target = 1;
-                    apply_output_target(cfg, output_target);
-                    pipeline.config().invert_x = cfg.invert_x;
-                    pipeline.config().invert_yaw = cfg.invert_yaw;
-                    pipeline.config().invert_roll = cfg.invert_roll;
-                    std::printf("\n  output_target = %s (X/Yaw/Roll inversion ON)\n", output_target_name(output_target));
-                    config_changed = true;
-                    break;
-                case 's':
-                case 'S':
-                    output_target = 2;
-                    apply_output_target(cfg, output_target);
-                    pipeline.config().invert_x = cfg.invert_x;
-                    pipeline.config().invert_yaw = cfg.invert_yaw;
-                    pipeline.config().invert_roll = cfg.invert_roll;
-                    std::printf("\n  output_target = %s (X/Yaw/Roll inversion OFF)\n", output_target_name(output_target));
-                    config_changed = true;
-                    break;
-
                 // Response: 3/4 = rotation beta down/up (increase = more responsive to head turns)
                 case '3':
                     cfg.filter_rot_beta = std::max(0.001f, cfg.filter_rot_beta / 10.0f);
@@ -569,7 +531,7 @@ int main() {
 
         // Auto-save on any change
         if (config_changed) {
-            save_config(cfg, output_target);
+            save_config(cfg);
         }
 
         frame_count++;
