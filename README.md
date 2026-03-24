@@ -16,6 +16,10 @@ Some of the games playable in 3D and headtracking on Leia Simulated Reality moni
 | Assetto Corsa Competizione | Acer TrueGame | Native |
 | BeamNG.drive | [Geo-11](https://helixmod.blogspot.com/2023/11/beamngdrive.html) | Native |
 | DCS World | [Geo-11](https://helixmod.blogspot.com/2018/02/dcs-25-3d-fix-wip.html) | Native |
+| Descent | [OpenGL3DVision](https://helixmod.blogspot.com/2018/12/descent-1-2-dxx-rebirth-opengl.html) | Native |
+| DiRT 3 | [SuperDepth3D](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=rec4PbYHftnWBof6I) | Native |
+| DiRT 4 | [3DMigoto/Geo-11](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recWWbkXb8lvYFiTd) | Native |
+| Dirt Rally | [3DMigoto/Geo-11](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recyY9BtZKXOZihKA) | Native |
 | Dirt Rally 2.0 | Acer TrueGame/[NewAxis](https://github.com/marcussacana/NewAxis) | Native |
 | Dying Light 2 | [SuperDepth3D](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=reci0NN7x8YDzjtch) | [Head Tracking Mod](https://www.nexusmods.com/dyinglight2/mods/1900) |
 | Elite Dangerous | Native | Native |
@@ -23,21 +27,27 @@ Some of the games playable in 3D and headtracking on Leia Simulated Reality moni
 | Gone Home | [VorpX](https://www.vorpx.com/) | [Head Tracking Mod](https://github.com/itsloopyo/gone-home-headtracking) |
 | Green Hell | [Geo-11](https://helixmod.blogspot.com/2026/02/green-hell-geo11-fix.html) | [Head Tracking Mod](https://www.nexusmods.com/greenhell/mods/83) |
 | MechWarrior 5: Mercenaries | [Geo-11](https://helixmod.blogspot.com/2020/01/mechwarrior-5-mercenaries.html) | Native |
+| Microsoft Flight Simulator X | [SuperDepth3D](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=rec1Aa5DLoRDwZ1FI) | Native |
 | Minecraft: Java Edition | [Stereo 3D mod](https://modrinth.com/mod/stereopsis) | [Head Tracking Mod](https://www.curseforge.com/minecraft/mc-mods/correct-gaming-posture) |
+| Overload | [Geo-11](https://helixmod.blogspot.com/2020/07/overload.html) | Native |
 | Outer Wilds | [Geo-11](https://helixmod.blogspot.com/2019/07/outer-wilds-3d-vision-fix-losti-v100.html) | [Head Tracking Mod](https://outerwildsmods.com/mods/headtracking/) |
+| Project CARS | [3DMigoto/Geo-11](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recmQ6ia16NkuIXgh) | Native |
+| Project CARS 2 | [3DMigoto/Geo-11](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recmQGLLapAr8DZEp) | Native |
+| Race Driver: GRID | [SuperDepth3D](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recXtcFbvdAtwEXuB) | Native |
 | Star Wars: Squadrons | [Geo-11](https://helixmod.blogspot.com/2025/07/star-wars-squadrons-geo-11-fix-update.html) | Native |
 
-*Add more games to this table as tested and mods released them.*
+*More games to be added as tested and released.*
 
 **Recommended play modes:**
-- **XYZ + Yaw/Pitch** (Mode Z) — Best for most games, full 3-axis head tracking (position + yaw/pitch rotation) without roll
-- **XYZ only** (Mode X) — Pure positional tracking, matches native Leia Simulated Reality display support in games like Stellar Blade, Lies of P and The First Berserker: Khazan
+- **X, Y, Z, Yaw, Pitch** (Mode Z) — Best for most games, full 3-axis head tracking (position + yaw/pitch rotation) without roll
+- **X, Y, Z only** (Mode X) — Pure positional tracking, matches the tracking on natively developed [LeiaSR SDK](https://support.immersity.ai/sdk/native-sdk-c-c++/index) games like The First Berserker: Khazan, Stellar Blade and Lies of P.
 
 **by [evilkermitreturns](https://github.com/evilkermitreturns)** & [effcol](https://github.com/effcol)
 
 ## Requirements
 
-- Leia Simulated Reality display (e.g. Acer SpatialLabs, Samsung Odyssey 3D) with LeiaSR Runtime installed and running
+- Leia Simulated Reality display (e.g. Acer SpatialLabs, Samsung Odyssey 3D)
+- LeiaSR Runtime installed and running (installs via [SpatialLabs Experience  Centre](https://www.acer.com/gb-en/support/product-support/PSV27-2) or [Odyssey 3D Hub](https://www.samsung.com/levant/support/model/LS27FG900XMXUE/))
 - [OpenTrack](https://github.com/opentrack/opentrack)
 - [LeiaSR SDK](https://www.immersity.ai/sdk/) (for building from source)
 
@@ -69,28 +79,21 @@ Hotkeys only work when the console window is focused. They won't interfere with 
 
 ### Output Modes
 
-Press one of these keys to switch output modes during gameplay. *Listed in order of reccomendation*:
+Press one of these keys to switch output modes during gameplay. *Listed in order of recommendation*:
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| **Z** | X, Y, Z, Yaw, Pitch | 6DOF Head Position and Head Rotation, no roll. |
-| **X** | X, Y, Z | Head Position only, no Head Rotation.<br>*(This is how Leia use Head Tracking in native games, like Stellar Blade and Lies of P. Avoids [Motion Parallax Conflict](https://www.pcgamingwiki.com/wiki/Glossary:Native_3D#Motion_Parallax_Conflict).)* |
-| **C** |  Yaw, Pitch | 3DOF Head Rotation only, no roll. |
-| **V** | X, Y, Z, Yaw, Pitch, Roll | 6DOF Head Position and Head Rotation.<br>*(Not reccomended as Roll is unneccisary.)* |
-| **B** |Yaw, Pitch, Roll | 3DOF Head Rotation only, no position.<br>*(Not reccomended as Roll is unneccisary.)* |
-
-### Output Target
-
-| Key | Target | Description |
-|-----|--------|-------------|
-| **A** | OpenTrack | No inversion (default) |
-| **S** | SteamVR/VRto3D | With X, Yaw, Roll inversion (X, Y, Z not working currently) |
+| **Z** | X, Y, Z, Yaw, Pitch | **Recommended** — 6DOF Head Position and Head Rotation, no roll. Best for most games. |
+| **X** | X, Y, Z | Head Position only, no Head Rotation.<br>*(This is how Leia uses Head Tracking in native games like Stellar Blade and Lies of P. Avoids [Motion Parallax Conflict](https://www.pcgamingwiki.com/wiki/Glossary:Native_3D#Motion_Parallax_Conflict).)* |
+| **C** | Yaw, Pitch | 3DOF Head Rotation only, no roll. No position tracking. |
+| **V** | X, Y, Z, Yaw, Pitch, Roll | Full 6DOF Head Position and Head Rotation including roll.<br>*(Not recommended as Roll is often unnecessary.)* |
+| **B** | Yaw, Pitch, Roll | 3DOF Head Rotation only, no position.<br>*(Not recommended as Roll is often unnecessary.)* |
 
 Settings auto-save on every change. Press **Ctrl+L** to lock hotkeys and prevent accidental changes.
 
 ## Settings
 
-Settings are saved to `Steam/config/vrto3d/leia_track_config.txt` (next to VRto3D's config) and auto-load on startup.
+Settings are saved to `opentrack_bridge_config.txt` (next to the executable) and auto-load on startup.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
@@ -108,23 +111,22 @@ Settings are saved to `Steam/config/vrto3d/leia_track_config.txt` (next to VRto3
 | `max_pitch` | 70 | Maximum pitch output (degrees) |
 | `max_roll` | 70 | Maximum roll output (degrees) |
 | `passthrough_translation` | 1 | Include position X/Y/Z in OpenTrack packet |
-| `invert_x` | 0 | Invert X translation output (managed by output target) |
-| `invert_yaw` | 0 | Invert yaw output (managed by output target) |
-| `invert_roll` | 0 | Invert roll output (managed by output target) |
-| `output_mode` | 1 | 1: XYZ+YP (default), 2: XYZ, 3: XYZ+YPR, 4: YPR, 5: YP |
-| `output_target` | 1 | 1: OpenTrack (default), 2: SteamVR/VRto3D |
+| `invert_x` | 1 | Invert X translation output (OpenTrack convention) |
+| `invert_yaw` | 1 | Invert yaw output (OpenTrack convention) |
+| `invert_roll` | 1 | Invert roll output (OpenTrack convention) |
+| `output_mode` | 1 | 1: XYZ+YP (default), 2: XYZ, 3: YP, 4: All 6DOF, 5: YPR |
 
 ### Editing the Config File
 
 The config file is plain text — open it in any text editor. Default location:
 
 ```
-C:\Program Files (x86)\Steam\config\vrto3d\leia_track_config.txt
+C:\Users\[YourUsername]\[Path to executable folder]\opentrack_bridge_config.txt
 ```
 
 Example contents:
 ```
-# Leia Track App — Settings
+# Simulated Reality OpenTrack Bridge — Settings
 filter_mincutoff = 0.08
 filter_beta = 0.08
 angle_deadzone_deg = 0.2
@@ -139,11 +141,10 @@ max_yaw = 70
 max_pitch = 70
 max_roll = 70
 passthrough_translation = 1
-invert_x = 0
-invert_yaw = 0
-invert_roll = 0
+invert_x = 1
+invert_yaw = 1
+invert_roll = 1
 output_mode = 1
-output_target = 1
 ```
 
 Lines starting with `#` are comments. Any setting not in the file uses its default value. Changes take effect next time you launch the app.
