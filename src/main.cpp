@@ -196,10 +196,9 @@ static const char* output_target_name(int output_target) {
 }
 
 static void apply_output_target(TrackConfig& cfg) {
-    // OpenTrack convention: all axes inverted
-    cfg.invert_x = true;
-    cfg.invert_yaw = true;
-    cfg.invert_roll = true;  // Roll inversion now enabled for OpenTrack
+    // OpenTrack inversion settings are now controlled via config file (defaults set in TrackConfig)
+    // This function is kept for future expansion if needed
+    (void)cfg;  // Unused parameter
 }
 
 // --- Console helpers ---
