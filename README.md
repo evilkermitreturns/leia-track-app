@@ -35,6 +35,7 @@ Some of the games playable in 3D and headtracking on Leia Simulated Reality moni
 | Project CARS 2 | [3DMigoto/Geo-11](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recmQGLLapAr8DZEp) | Native |
 | Race Driver: GRID | [SuperDepth3D](https://airtable.com/appByPZJsOQSVGDID/shrAfMuGs1IOIEpRT?uMgeK=recXtcFbvdAtwEXuB) | Native |
 | Star Wars: Squadrons | [Geo-11](https://helixmod.blogspot.com/2025/07/star-wars-squadrons-geo-11-fix-update.html) | Native |
+| Subnautica | [Geo-11](https://helixmod.blogspot.com/2024/08/subnautica-final-version202371288.html) | [Head Tracking Mod](https://github.com/itsloopyo/subnautica-headtracking) |
 
 *More games to be added as tested and released.*
 
@@ -69,8 +70,8 @@ Hotkeys only work when the console window is focused. They won't interfere with 
 | Key | Action |
 |-----|--------|
 | **Ctrl+L** | Lock/unlock tuning hotkeys |
-| **1/2** | Yaw/Pitch/Roll smoothness (min_cutoff down/up) |
-| **3/4** | Yaw/Pitch/Roll response speed (beta down/up) |
+| **1/2** | Yaw, Pitch, Roll smoothness (min_cutoff down/up) |
+| **3/4** | Yaw, Pitch, Roll response speed (down/up) |
 | **5/6** | Yaw sensitivity (down/up) |
 | **7/8** | Pitch sensitivity (down/up) |
 | **9/0** | Roll sensitivity (down/up) |
@@ -97,8 +98,10 @@ Settings are saved to `opentrack_bridge_config.txt` (next to the executable) and
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `filter_mincutoff` | 0.08 | Yaw/Pitch/Roll smoothness at rest. Lower = smoother but laggier. Position is unfiltered (1:1). |
-| `filter_beta` | 0.08 | Yaw/Pitch/Roll responsiveness to fast movement. Higher = less lag |
+| `filter_rot_mincutoff` | 0.001 | Yaw, Pitch, Roll smoothness at rest. Very low = minimal noise (smoothest). Adjust for your display's IR noise. |
+| `filter_rot_beta` | 0.001 | Yaw, Pitch, Roll responsiveness to fast movement. Higher = snappier response. |
+| `filter_pos_mincutoff` | 0.08 | X, Y, Z position smoothness at rest. |
+| `filter_pos_beta` | 0.08 | X, Y, Z position responsiveness to fast movement. |
 | `angle_deadzone_deg` | 0.2 | Ignore tiny angle noise around center |
 | `orientation_radians` | 1 | Set to 1 when SDK orientation output is radians |
 | `sens_yaw` | 1.0 | Yaw output scale |
@@ -110,11 +113,11 @@ Settings are saved to `opentrack_bridge_config.txt` (next to the executable) and
 | `max_yaw` | 70 | Maximum yaw output (degrees) |
 | `max_pitch` | 70 | Maximum pitch output (degrees) |
 | `max_roll` | 70 | Maximum roll output (degrees) |
-| `passthrough_translation` | 1 | Include position X/Y/Z in OpenTrack packet |
+| `passthrough_translation` | 1 | Include position x, Y, Z in OpenTrack packet |
 | `invert_x` | 1 | Invert X translation output (OpenTrack convention) |
 | `invert_yaw` | 1 | Invert yaw output (OpenTrack convention) |
-| `invert_roll` | 1 | Invert roll output (OpenTrack convention) |
-| `output_mode` | 1 | 1: XYZ+YP (default), 2: XYZ, 3: YP, 4: All 6DOF, 5: YPR |
+| `invert_roll` | 0 | Invert roll output. Set to 1 if head roll appears inverted (right roll = ground up). |
+| `output_mode` | 1 | 1: X, Y, Z, Yaw, Pitch (default), 2: X, Y, Z, 3: Yaw, Pitch, 4: X, Y, Z, Yaw, Pitch, Roll (All 6DOF), 5: Yaw, Pitch, Roll (All 3DOF) |
 
 ### Editing the Config File
 
@@ -127,8 +130,10 @@ C:\Users\[YourUsername]\[Path to executable folder]\opentrack_bridge_config.txt
 Example contents:
 ```
 # Simulated Reality OpenTrack Bridge — Settings
-filter_mincutoff = 0.08
-filter_beta = 0.08
+filter_rot_mincutoff = 0.001
+filter_rot_beta = 0.001
+filter_pos_mincutoff = 0.08
+filter_pos_beta = 0.08
 angle_deadzone_deg = 0.2
 orientation_radians = 1
 sens_yaw = 1
@@ -143,7 +148,7 @@ max_roll = 70
 passthrough_translation = 1
 invert_x = 1
 invert_yaw = 1
-invert_roll = 1
+invert_roll = 0
 output_mode = 1
 ```
 
@@ -175,6 +180,7 @@ Leia IR Camera → SR SDK (head pose)
 
 ## Tips
 
+- **Centre monitor when launching** — When launching, I suggest looking and centreing yourself at the centre of your screen so the tracking initially correctly orientates you.
 - **Good lighting helps** — the IR camera works best with some ambient light
 - **Lock when playing** — press Ctrl+L to prevent accidental hotkey presses
 
