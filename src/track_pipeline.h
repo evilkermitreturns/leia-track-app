@@ -11,8 +11,8 @@ struct TrackConfig {
     float filter_freq           = 60.0f;
     float filter_pos_mincutoff  = 0.08f;  // Position smoothing
     float filter_pos_beta       = 0.08f;  // Position adaptation speed
-    float filter_rot_mincutoff  = 0.12f;  // Rotation smoothing (higher = more responsive)
-    float filter_rot_beta       = 0.01f;  // Rotation adaptation speed - TUNED FOR RESPONSIVENESS
+    float filter_rot_mincutoff  = 0.001f;  // Rotation smoothing - LOW NOISE (0.001 = minimal smoothing)
+    float filter_rot_beta       = 0.001f;  // Rotation adaptation speed - VERY SMOOTH
     float angle_deadzone_deg    = 0.2f;
 
     // Orientation conversion. Leia outputs are typically radians.
@@ -33,9 +33,9 @@ struct TrackConfig {
 
     // Translation passthrough from monitor frame (cm)
     bool passthrough_translation = true;
-    bool invert_x = false;
-    bool invert_yaw = false;
-    bool invert_roll = false;
+    bool invert_x = true;    // OpenTrack convention
+    bool invert_yaw = true;  // OpenTrack convention
+    bool invert_roll = false;  // Tracker outputs correct orientation; set to true if inverted
 
     // Output modes (ordered by recommendation for best stability)
     // 1: XYZ + Yaw/Pitch (RECOMMENDED DEFAULT - best for most games)
